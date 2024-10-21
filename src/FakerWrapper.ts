@@ -5,12 +5,13 @@ import Settings from "@/settings";
 
 export class FakerWrapper {
   listItems(): ListItem[] {
-    return [
-      { quantity: 1, name: "Mouse", priceInCents: 780 },
-      { quantity: 2, name: "MousePad", priceInCents: 500 },
-      { quantity: 1, name: "Monitor", priceInCents: 14500 },
-      { quantity: 3, name: "USB Type C cable", priceInCents: 700 },
-    ];
+    return faker.helpers.uniqueArray(faker.commerce.productName, 4).map(
+      (name: string): ListItem => ({
+        name,
+        priceInCents: faker.number.int({ min: 50, max: 1e4, multipleOf: 25 }),
+        quantity: faker.number.int({ min: 1, max: 6 }),
+      }),
+    );
   }
 
   deliveryDate(): string {

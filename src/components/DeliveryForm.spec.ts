@@ -4,6 +4,7 @@ import type { ListItem } from "@/types";
 import { cleanup, render, type RenderOptions, screen, within } from "@testing-library/vue";
 import { userEvent } from "@testing-library/user-event";
 import { asCurrency } from "@/helpers";
+import { FakerWrapper } from "@/FakerWrapper";
 
 const baseItems: ListItem[] = [
   { quantity: 1, name: "Mouse", priceInCents: 780 },
@@ -209,16 +210,15 @@ function cleanRender<Component>(component: Component, options?: RenderOptions<Co
 }
 
 async function filloutAllRecipientInformation() {
-  await userEvent.type(screen.getByRole("textbox", { name: /name/i }), "Homer Simpson");
-  await userEvent.type(screen.getByRole("textbox", { name: /email/i }), "h.simpson@doh.test");
-  await userEvent.type(screen.getByRole("combobox", { name: /country/i }), "United States");
-  await userEvent.type(screen.getByRole("textbox", { name: /street address/i }), "742 Evergreen Terrace");
-  await userEvent.type(screen.getByRole("textbox", { name: /city/i }), "Springfield");
-  await userEvent.type(screen.getByRole("textbox", { name: /state/i }), "Oregon");
-  await userEvent.type(screen.getByRole("textbox", { name: /postal code/i }), "49007");
+  const faker = new FakerWrapper();
+  const { name, country, email, city, stateProvince, zipPostalCode, streetAddress } = faker.recipientInformation();
+  await userEvent.type(screen.getByRole("textbox", { name: /name/i }), name);
+  await userEvent.type(screen.getByRole("textbox", { name: /email/i }), email);
+  await userEvent.type(screen.getByRole("combobox", { name: /country/i }), country);
+  await userEvent.type(screen.getByRole("textbox", { name: /street address/i }), streetAddress);
+  await userEvent.type(screen.getByRole("textbox", { name: /city/i }), city);
+  await userEvent.type(screen.getByRole("textbox", { name: /state/i }), stateProvince);
+  await userEvent.type(screen.getByRole("textbox", { name: /postal code/i }), zipPostalCode);
 
-  await userEvent.type(
-    screen.getByRole("textbox", { name: /delivery note/i }),
-    "For best results, avoid letting Bart handle the box.",
-  );
+  await userEvent.type(screen.getByRole("textbox", { name: /delivery note/i }), faker.additionalNotes());
 }

@@ -13,13 +13,13 @@ const isUsingMagicMode = useMagicMode();
 
 function populateWithFakeValues() {
   deliveryDetails.recipientInformation.name = faker.person.fullName();
-  deliveryDetails.recipientInformation.email = "h.simpson@doh.test";
+  deliveryDetails.recipientInformation.email = faker.internet.email();
   deliveryDetails.recipientInformation.country = "United States";
-  deliveryDetails.recipientInformation.stateProvince = "Oregon";
-  deliveryDetails.recipientInformation.city = "Springfield";
-  deliveryDetails.recipientInformation.streetAddress = "742 Evergreen Terrace";
-  deliveryDetails.recipientInformation.zipPostalCode = "49007";
-  deliveryDetails.additionalNotes = "For best results, avoid letting Bart handle the box.";
+  deliveryDetails.recipientInformation.stateProvince = faker.location.state();
+  deliveryDetails.recipientInformation.city = faker.location.city();
+  deliveryDetails.recipientInformation.streetAddress = faker.location.streetAddress({ useFullAddress: true });
+  deliveryDetails.recipientInformation.zipPostalCode = faker.location.zipCode();
+  deliveryDetails.additionalNotes = faker.lorem.paragraph();
 }
 </script>
 

@@ -17,7 +17,7 @@ export class FakerWrapper {
   deliveryDate(): string {
     return new Intl.DateTimeFormat("en-US", {
       dateStyle: "long",
-    }).format(new Date());
+    }).format(faker.date.soon({ days: 30 }));
   }
 
   additionalNotes(): string {

@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import TextInput from "@/components/atoms/TextInput.vue";
 import MagicButton from "@/components/atoms/MagicButton.vue";
 import DropdownInput from "@/components/atoms/DropdownInput.vue";
@@ -6,12 +6,13 @@ import TextAreaInput from "@/components/atoms/TextAreaInput.vue";
 import { useMagicMode } from "@/composables/useMagicMode";
 import { useDeliveryDetailsState } from "@/composables/useDeliveryDetailsState";
 import SETTINGS from "@/settings";
+import { faker } from "@faker-js/faker";
 
 const deliveryDetails = useDeliveryDetailsState();
 const isUsingMagicMode = useMagicMode();
 
 function populateWithFakeValues() {
-  deliveryDetails.recipientInformation.name = "Homer Simpson";
+  deliveryDetails.recipientInformation.name = faker.person.fullName();
   deliveryDetails.recipientInformation.email = "h.simpson@doh.test";
   deliveryDetails.recipientInformation.country = "United States";
   deliveryDetails.recipientInformation.stateProvince = "Oregon";

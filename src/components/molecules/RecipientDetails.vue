@@ -6,20 +6,15 @@ import TextAreaInput from "@/components/atoms/TextAreaInput.vue";
 import { useMagicMode } from "@/composables/useMagicMode";
 import { useDeliveryDetailsState } from "@/composables/useDeliveryDetailsState";
 import SETTINGS from "@/settings";
-import { faker } from "@faker-js/faker";
+import { FakerWrapper } from "@/FakerWrapper";
 
 const deliveryDetails = useDeliveryDetailsState();
 const isUsingMagicMode = useMagicMode();
 
 function populateWithFakeValues() {
-  deliveryDetails.recipientInformation.name = faker.person.fullName();
-  deliveryDetails.recipientInformation.email = faker.internet.email();
-  deliveryDetails.recipientInformation.country = "United States";
-  deliveryDetails.recipientInformation.stateProvince = faker.location.state();
-  deliveryDetails.recipientInformation.city = faker.location.city();
-  deliveryDetails.recipientInformation.streetAddress = faker.location.streetAddress({ useFullAddress: true });
-  deliveryDetails.recipientInformation.zipPostalCode = faker.location.zipCode();
-  deliveryDetails.additionalNotes = faker.lorem.paragraph();
+  const fakerWrapper = new FakerWrapper();
+  deliveryDetails.recipientInformation = fakerWrapper.recipientInformation();
+  deliveryDetails.additionalNotes = fakerWrapper.additionalNotes();
 }
 </script>
 

@@ -4,6 +4,7 @@ import MagicButton from "@/components/atoms/MagicButton.vue";
 import { asCurrency } from "@/helpers";
 import { useMagicMode } from "@/composables/useMagicMode";
 import { useDeliveryDetailsState } from "@/composables/useDeliveryDetailsState";
+import { FakerWrapper } from "@/FakerWrapper";
 
 type Props = {
   taxesAndFeesRatio: number;
@@ -13,16 +14,9 @@ const deliveryDetails = useDeliveryDetailsState();
 const isUsingMagicMode = useMagicMode();
 
 function populateWithFakeValues() {
-  deliveryDetails.items = [
-    { quantity: 1, name: "Mouse", priceInCents: 780 },
-    { quantity: 2, name: "MousePad", priceInCents: 500 },
-    { quantity: 1, name: "Monitor", priceInCents: 14500 },
-    { quantity: 3, name: "USB Type C cable", priceInCents: 700 },
-  ];
-
-  deliveryDetails.estimatedDeliveryDate = new Intl.DateTimeFormat("en-US", {
-    dateStyle: "long",
-  }).format(new Date());
+  const fakerWrapper = new FakerWrapper();
+  deliveryDetails.items = fakerWrapper.items();
+  deliveryDetails.estimatedDeliveryDate = fakerWrapper.estimatedDeliveryDate();
 }
 
 const subtotal = computed(() =>

@@ -6,12 +6,7 @@ import { userEvent } from "@testing-library/user-event";
 import { asCurrency } from "@/helpers";
 import { FakerWrapper } from "@/FakerWrapper";
 
-const baseItems: ListItem[] = [
-  { quantity: 1, name: "Mouse", priceInCents: 780 },
-  { quantity: 2, name: "MousePad", priceInCents: 500 },
-  { quantity: 1, name: "Monitor", priceInCents: 14500 },
-  { quantity: 3, name: "USB Type C cable", priceInCents: 700 },
-];
+const baseItems: ListItem[] = new FakerWrapper().items();
 
 describe("DeliveryForm", () => {
   beforeEach(() => {
@@ -89,7 +84,8 @@ describe("DeliveryForm", () => {
   });
 
   test("Displays the estimated date of delivery", () => {
-    const estimatedDeliveryDate = "2020-01-01";
+    const estimatedDeliveryDate = new FakerWrapper().estimatedDeliveryDate();
+
     cleanRender(DeliveryForm, {
       props: {
         initialDetails: { items: baseItems, estimatedDeliveryDate },

@@ -1,5 +1,6 @@
 import type { ListItem, RecipientInformation } from "@/types";
-import { faker } from "@faker-js/faker";
+import { Faker, faker as faker, fakerEN_CA, fakerFR, fakerPT_BR } from "@faker-js/faker";
+import Settings from "@/settings";
 
 export class FakerWrapper {
   additionalNotes(): string {
@@ -22,14 +23,28 @@ export class FakerWrapper {
   }
 
   recipientInformation(): RecipientInformation {
+    const country = faker.helpers.arrayElement(Settings.COUNTRIES);
+    const localFaker = this.localFaker(country);
+
     return {
-      name: faker.person.fullName(),
-      email: faker.internet.email(),
-      country: "United States",
-      stateProvince: faker.location.state(),
-      city: faker.location.city(),
-      streetAddress: faker.location.streetAddress({ useFullAddress: true }),
-      zipPostalCode: faker.location.zipCode(),
+      name: localFaker.person.fullName(),
+      email: localFaker.internet.email(),
+      country: country,
+      stateProvince: localFaker.location.state(),
+      city: localFaker.location.city(),
+      streetAddress: localFaker.location.streetAddress({ useFullAddress: true }),
+      zipPostalCode: localFaker.location.zipCode(),
     };
+  }
+
+  private localFaker(country: string): Faker {
+    return (
+      {
+        Brazil: fakerPT_BR,
+        Canada: fakerEN_CA,
+        France: fakerFR,
+        "United States": faker,
+      }[country] ?? faker
+    );
   }
 }

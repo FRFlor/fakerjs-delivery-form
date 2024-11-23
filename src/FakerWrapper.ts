@@ -1,6 +1,7 @@
 import type { ListItem, RecipientInformation } from "@/types";
-import { Faker, faker as faker, fakerEN_CA, fakerFR, fakerPT_BR } from "@faker-js/faker";
+import { Faker, faker, fakerEN_CA, fakerFR, fakerPT_BR } from "@faker-js/faker";
 import Settings from "@/settings";
+import { faker_MiddleEarth } from "@/faker-middle-earth";
 
 export class FakerWrapper {
   additionalNotes(): string {
@@ -44,6 +45,7 @@ export class FakerWrapper {
         Canada: fakerEN_CA,
         France: fakerFR,
         "United States": faker,
+        "Middle-earth": faker_MiddleEarth,
       }[country] ?? faker
     );
   }

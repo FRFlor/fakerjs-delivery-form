@@ -11,16 +11,17 @@ export class FakerWrapper {
   estimatedDeliveryDate(): string {
     return new Intl.DateTimeFormat("en-US", {
       dateStyle: "long",
-    }).format(new Date());
+    }).format(faker.date.soon({ days: 30 }));
   }
 
   items(): ListItem[] {
-    return [
-      { quantity: 1, name: "Mouse", priceInCents: 780 },
-      { quantity: 2, name: "MousePad", priceInCents: 500 },
-      { quantity: 1, name: "Monitor", priceInCents: 14500 },
-      { quantity: 3, name: "USB Type C cable", priceInCents: 700 },
-    ];
+    return faker.helpers.uniqueArray(faker.commerce.productName, 4).map(
+      (name: string): ListItem => ({
+        name,
+        priceInCents: faker.number.int({ min: 50, max: 100_00, multipleOf: 25 }),
+        quantity: faker.number.int({ min: 1, max: 6 }),
+      }),
+    );
   }
 
   recipientInformation(): RecipientInformation {
